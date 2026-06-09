@@ -1,6 +1,7 @@
 from pathlib import Path
 import pytest
 from playwright.sync_api import sync_playwright
+
 from config.settings import TestSettings, load_settings
 from utils.file_utils import ensure_dir, timestamp
 
@@ -15,23 +16,28 @@ def page(settings: TestSettings):
     ensure_dir(settings.project_root / "reports")
     ensure_dir(settings.project_root / "screenshots")
     ensure_dir(settings.project_root / "traces")
+    ensure_dir(settings.project_root / "reports" / "videos")
+
+    user_data_dir = settings.project_root / ".browser-profile"
+    ensure_dir(user_data_dir)
 
     with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(
+        context = playwright.chromium.launch_persistent_context(
+            user_data_dir=str(user_data_dir),
             headless=settings.headless,
             slow_mo=settings.slow_mo_ms,
-        )
-        context = browser.new_context(
             locale="en-AU",
             viewport={"width": 1440, "height": 1000},
             record_video_dir=str(settings.project_root / "reports" / "videos"),
         )
+
+        context.set_default_timeout(settings.default_timeout_ms)
         context.tracing.start(screenshots=True, snapshots=True, sources=True)
-        test_page = context.new_page()
+
+        test_page = context.pages[0] if context.pages else context.new_page()
 
         yield test_page
 
         trace_file = settings.project_root / "traces" / f"trace_{timestamp()}.zip"
         context.tracing.stop(path=str(trace_file))
         context.close()
-        browser.close()
