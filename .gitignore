@@ -1,0 +1,12 @@
+.vs/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.playwright/
+test-results/
+reports/
+screenshots/
+traces/
+*.zip
+.env
