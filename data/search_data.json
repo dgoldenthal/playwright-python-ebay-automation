@@ -1,15 +1,17 @@
 {
-  "scenarios": [
+  "e2e_scenarios": [
     {
-      "name": "Sony Clie",
-      "query": "Sony Clie PEG-TG50",
+      "name": "nike_air_max_susan_under_400_aud",
+      "query": "Nike Air Max 1 Susan CK6643-100",
       "max_price": 400,
       "limit": 5,
       "currency": "AUD"
-    },
+    }
+  ],
+  "search_only_scenarios": [
     {
-      "name": "Nike Air",
-      "query": "Nike Air Max 1 Susan CK6643-100",
+      "name": "Sony Clie",
+      "query": "Sony Clie PEG-TG50",
       "max_price": 400,
       "limit": 5,
       "currency": "AUD"

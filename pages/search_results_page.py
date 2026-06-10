@@ -62,7 +62,8 @@ class SearchResultsPage(BasePage):
             return
 
         try:
-            max_price_input.fill(str(max_price))
+             # eBay's max-price field expects a plain number; avoid "400.0" from float inputs.
+            max_price_input.fill(str(int(Decimal(str(max_price)))))
             apply_button = self.first_visible(self.APPLY_PRICE_SELECTORS, timeout=1200)
             if apply_button:
                 apply_button.click()
@@ -114,7 +115,7 @@ class SearchResultsPage(BasePage):
             return None
 
     def _extract_item_price(self, card) -> Decimal | None:
-        price_selectors = [".s-item__price", "span:has-text('$')"]
+        price_selectors = [".s-item__price"]
         for selector in price_selectors:
             try:
                 price_text = card.locator(selector).first.inner_text(timeout=1200)
