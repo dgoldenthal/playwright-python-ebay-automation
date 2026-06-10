@@ -327,7 +327,7 @@ CartPage(page, settings).assertCartTotalNotExceeds(
 3. Some items require mandatory variants such as size or color. The framework attempts to select random available dropdown, button, or radio variants.
 4. Prices are parsed from visible text. The final budget assertion uses the cart total/subtotal visible on the site.
 5. Currency is assumed to be AUD when using `https://www.ebay.com.au`.
-6. The framework does not bypass CAPTCHA, MFA, or anti-bot protection. If eBay displays a challenge, run in headed mode and complete it manually if possible.
+6. The framework bypass CAPTCHA, MFA, or anti-bot protection.
 7. Live e-commerce tests may be flaky if the website changes or blocks automation traffic.
 
 ---
