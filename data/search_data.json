@@ -1,17 +1,17 @@
 {
   "scenarios": [
     {
-      "name": "shoes_under_200_aud",
-      "query": "shoes",
-      "max_price": 200,
+      "name": "Sony Clie",
+      "query": "Sony Clie PEG-TG50",
+      "max_price": 400,
       "limit": 5,
       "currency": "AUD"
     },
     {
-      "name": "headphones_under_100_aud",
-      "query": "headphones",
-      "max_price": 100,
-      "limit": 3,
+      "name": "Nike Air",
+      "query": "Nike Air Max 1 Susan CK6643-100",
+      "max_price": 400,
+      "limit": 5,
       "currency": "AUD"
     }
   ]
