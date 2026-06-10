@@ -101,9 +101,9 @@ The JSON file uses two scenario groups:
   ],
   "search_only_scenarios": [
     {
-      "name": "zero_or_fewer_results_allowed",
-      "query": "zzzz-dgoldenthal-automation-test-9999",
-      "max_price": 220,
+      "name": "Sony Clie",
+      "query": "Sony Clie PEG-TG50",
+      "max_price": 400,
       "limit": 5,
       "currency": "AUD"
     }
