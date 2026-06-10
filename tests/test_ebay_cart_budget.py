@@ -13,7 +13,8 @@ test_data = load_test_data("data/search_data.json")
 @pytest.mark.e2e
 @pytest.mark.parametrize("scenario", test_data["scenarios"], ids=lambda item: item["name"])
 def test_search_add_to_cart_and_validate_budget(page, settings, scenario):
-    LoginPage(page, settings).authenticate()
+    login_page = LoginPage(page, settings)
+    login_page.authenticate()
 
     search_page = SearchResultsPage(page, settings)
     urls = search_page.searchItemsByNameUnderPrice(
@@ -21,6 +22,12 @@ def test_search_add_to_cart_and_validate_budget(page, settings, scenario):
         maxPrice=scenario["max_price"],
         limit=scenario.get("limit", 5),
     )
+
+    if search_page.is_bot_challenge():
+        pytest.skip(
+            "eBay served an anti-bot challenge (CAPTCHA/splash). "
+            "Cannot proceed in this environment; see README limitations."
+        )
 
     assert len(urls) > 0, (
         f"No items were found for query={scenario['query']} "

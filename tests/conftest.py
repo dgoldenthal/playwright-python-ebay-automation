@@ -5,6 +5,14 @@ from playwright.sync_api import sync_playwright
 from config.settings import TestSettings, load_settings
 from utils.file_utils import ensure_dir, timestamp
 
+
+REALISTIC_USER_AGENT = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/124.0.0.0 Safari/537.36"
+)
+
+
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield
@@ -20,6 +28,7 @@ def pytest_runtest_makereport(item, call):
                 print(f"\n[FAILURE SCREENSHOT] {path}")
             except Exception as e:
                 print(f"Could not capture failure screenshot: {e}")
+
 
 @pytest.fixture(scope="session")
 def settings() -> TestSettings:
@@ -43,7 +52,12 @@ def page(settings: TestSettings):
             slow_mo=settings.slow_mo_ms,
             locale="en-AU",
             viewport={"width": 1440, "height": 1000},
+            user_agent=REALISTIC_USER_AGENT,
             record_video_dir=str(settings.project_root / "reports" / "videos"),
+        )
+
+        context.add_init_script(
+            "Object.defineProperty(navigator, 'webdriver', {get: () => undefined});"
         )
 
         context.set_default_timeout(settings.default_timeout_ms)

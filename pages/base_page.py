@@ -37,6 +37,11 @@ class BasePage:
             except Exception:
                 continue
 
+    def is_bot_challenge(self) -> bool:
+        """Detect eBay's anti-bot splash/CAPTCHA/challenge page."""
+        url = (self.page.url or "").lower()
+        return "splashui" in url or "captcha" in url or "challenge" in url
+
     def first_visible(self, selectors: list[str], timeout: int = 3000) -> Locator | None:
         for selector in selectors:
             try:
