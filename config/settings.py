@@ -1,7 +1,8 @@
+from dotenv import load_dotenv
+load_dotenv()  # loads .env from the current working directory
 from dataclasses import dataclass
 import os
 from pathlib import Path
-from dotenv import load_dotenv
 
 
 @dataclass(frozen=True)

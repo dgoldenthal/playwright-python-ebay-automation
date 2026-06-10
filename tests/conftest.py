@@ -5,6 +5,21 @@ from playwright.sync_api import sync_playwright
 from config.settings import TestSettings, load_settings
 from utils.file_utils import ensure_dir, timestamp
 
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    rep = outcome.get_result()
+    if rep.when == "call" and rep.failed:
+        page = item.funcargs.get("page")
+        if page:
+            import time, pathlib
+            pathlib.Path("screenshots").mkdir(exist_ok=True)
+            path = f"screenshots/FAILED_{item.name}_{int(time.time())}.png"
+            try:
+                page.screenshot(path=path, full_page=True)
+                print(f"\n[FAILURE SCREENSHOT] {path}")
+            except Exception as e:
+                print(f"Could not capture failure screenshot: {e}")
 
 @pytest.fixture(scope="session")
 def settings() -> TestSettings:

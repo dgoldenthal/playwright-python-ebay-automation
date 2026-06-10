@@ -10,4 +10,4 @@ reports/
 screenshots/
 traces/
 *.zip
-.env
+.env/

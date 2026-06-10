@@ -1,10 +1,17 @@
 {
   "scenarios": [
     {
-      "name": "shoes_under_220_aud",
+      "name": "shoes_under_200_aud",
       "query": "shoes",
-      "max_price": 220,
+      "max_price": 200,
       "limit": 5,
+      "currency": "AUD"
+    },
+    {
+      "name": "headphones_under_100_aud",
+      "query": "headphones",
+      "max_price": 100,
+      "limit": 3,
       "currency": "AUD"
     }
   ]
